@@ -1,20 +1,21 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #eef6f4;
-  --surface:          #f7fbfa;
+  /* Icy canvas from Leslie Simon (#EBF2F6). Tokens pass WCAG AA on that field. */
+  --bg:          #EBF2F6;
+  --surface:          #F7FAFC;
   --nav-bg:          #0c3a40;
   --nav-text:     #8ec4c0;
-  --nav-hover:     #e8f7f5;
+  --nav-hover:     #EBF2F6;
   --nav-active:     #81D8D0;
-  --text:          #163033;
-  --text-muted:     #4a6468;
-  --text-light:     #6a8284;
-  --accent:          #2eb8b0;
-  --accent-dark:     #1a8c86;
+  --text:          #202428;
+  --text-muted:     #3D4F56;
+  --text-light:     #455860;
+  --accent:          #0F6B70;
+  --accent-dark:     #0C5F64;
   --teal:          #14747a;
-  --silver:          #c4d6d4;
-  --border:          #cfe3e0;
+  --silver:          #C5D4DE;
+  --border:          #C5D4DE;
   --nav-w:          240px;
   --right-w:          280px;
   --ui:          Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -56,7 +57,7 @@ body {
   top: 0;
   z-index: 5;
   background: var(--nav-bg);
-  border-bottom: 1px solid rgba(180, 83, 42, 0.32);
+  border-bottom: 1px solid rgba(129, 216, 208, 0.22);
 }
 .sidebar-search-btn {
   position: absolute;
@@ -70,7 +71,7 @@ body {
 .brand-mark { display: inline-block; }
 .brand-icon {
   display: block; width: 44px; height: 44px; margin: 0 auto 0.55rem;
-  border: 1px solid rgba(180, 83, 42, 0.5); border-radius: 10px;
+  border: 1px solid rgba(129, 216, 208, 0.45); border-radius: 10px;
 }
 .brand-title {
   font-family: var(--display);
@@ -154,7 +155,7 @@ body {
   display: flex; align-items: center; justify-content: center; gap: 0.45rem;
   flex-wrap: wrap;
   padding: 0.9rem 1.4rem 1.4rem;
-  font-size: 0.72rem; color: rgba(168, 180, 196,0.65);
+  font-size: 0.72rem; color: #C5D0D8;
 }
 .nav-legal a { color: rgba(244, 241, 232,0.75); text-decoration: none; }
 .nav-legal a:hover { color: #fff; text-decoration: underline; }
@@ -165,8 +166,8 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid rgba(232,160,112,0.45);
+  color: var(--nav-active);
+  border: 1px solid rgba(129, 216, 208, 0.45);
   border-radius: 999px;
   padding: 0.08rem 0.4rem;
 }
@@ -176,7 +177,7 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent-dark);
-  border: 1px solid rgba(142, 62, 31,0.35);
+  border: 1px solid rgba(15, 107, 112, 0.35);
   border-radius: 999px;
   padding: 0.08rem 0.4rem;
   margin-left: 0.35rem;
@@ -219,13 +220,13 @@ body {
 }
 .right-panel-header {
   padding: 3.8rem 1.4rem 1rem;
-  border-bottom: 1px solid rgba(180, 83, 42, 0.32);
+  border-bottom: 1px solid rgba(129, 216, 208, 0.22);
   flex-shrink: 0;
 }
 .right-panel-kicker {
   font-size: 0.7rem; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 0.4rem;
+  color: var(--nav-active); margin-bottom: 0.4rem;
 }
 .right-panel-title {
   font-family: var(--display);
@@ -249,12 +250,12 @@ a.news-item:hover { background: rgba(255,255,255,0.07); }
   color: #f0f4f7; margin-bottom: 0.35rem;
 }
 .news-item-snippet { font-size: 0.8rem; line-height: 1.5; color: #b8c5cf; margin-bottom: 0.3rem; }
-.news-item-meta { font-size: 0.75rem; color: #8aa0b0; }
+.news-item-meta { font-size: 0.75rem; color: #A8B8C4; }
 .right-panel-footer {
   padding: 0.9rem 1.4rem;
   border-top: 1px solid rgba(168, 180, 196,0.18); flex-shrink: 0;
 }
-.right-panel-footer p { font-size: 0.75rem; color: #8aa0b0; line-height: 1.55; }
+.right-panel-footer p { font-size: 0.75rem; color: #A8B8C4; line-height: 1.55; }
 
 body.right-collapsed .right-panel { transform: translateX(100%); }
 body.right-collapsed .main { margin-right: 0; }
@@ -509,7 +510,7 @@ body.right-collapsed .right-panel-tab svg { transform: scaleX(1); }
   border-bottom: 1px solid var(--border);
   background: var(--bg);
 }
-.post:hover { background: rgba(255,250,243,0.7); }
+.post:hover { background: rgba(15, 107, 112, 0.05); }
 .post-avatar {
   flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -538,7 +539,7 @@ body.right-collapsed .right-panel-tab svg { transform: scaleX(1); }
 }
 .post-reply .post-avatar { width: 32px; height: 32px; font-size: 0.68rem; }
 .post-action-delete { color: var(--accent-dark); }
-.post-action-delete:hover { color: #9a3412; }
+.post-action-delete:hover { color: #8B1E1E; }
 
 .soon-panel {
   padding: 1.6rem 1.3rem;
@@ -665,7 +666,7 @@ body.nav-collapsed .explore-overlay { left: 0; }
   max-width: 80%; padding: 0.55rem 0.8rem; border-radius: 14px;
   font-size: 0.88rem; line-height: 1.4;
 }
-.chat-bubble.them { background: #efe6d8; align-self: flex-start; }
+.chat-bubble.them { background: #DCE6EE; align-self: flex-start; }
 .chat-bubble.me { background: var(--nav-bg); color: #fff; align-self: flex-end; }
 .chat-compose {
   display: flex; gap: 0.5rem; padding: 0.75rem 1rem;
@@ -687,7 +688,7 @@ body.nav-collapsed .explore-overlay { left: 0; }
   display: flex; gap: 0.75rem; padding: 1rem 1.3rem;
   border-bottom: 1px solid var(--border);
 }
-.notif-item.unread { background: rgba(224,122,61,0.08); }
+.notif-item.unread { background: rgba(15, 107, 112, 0.08); }
 .notif-item p { font-size: 0.9rem; }
 .notif-item time { font-size: 0.75rem; color: var(--text-light); }
 
