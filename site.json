@@ -8,10 +8,10 @@
   "theme": {
     "bg": "#EBF2F6",
     "surface": "#F7FAFC",
-    "nav-bg": "#0c3a40",
-    "nav-text": "#8ec4c0",
-    "nav-hover": "#EBF2F6",
-    "nav-active": "#81D8D0",
+    "nav-bg": "#E4E7F6",
+    "nav-text": "#2A3148",
+    "nav-hover": "#1E2438",
+    "nav-active": "#2F3A6C",
     "text": "#202428",
     "text-muted": "#3D4F56",
     "text-light": "#455860",
@@ -21,11 +21,11 @@
     "silver": "#C5D4DE",
     "border": "#C5D4DE",
     "avatarColors": [
-      "#0c3a40",
+      "#2F3A6C",
       "#0F6B70",
       "#14747a",
-      "#3D4F56",
-      "#0A585C",
+      "#3D4A62",
+      "#1E2438",
       "#202428"
     ]
   },
