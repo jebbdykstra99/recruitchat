@@ -4,29 +4,29 @@
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
   "composePlaceholder": "What's the loop looking like?",
-  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No résumé upload.",
+  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No r\u00e9sum\u00e9 upload.",
   "theme": {
-    "bg": "#eef6f4",
-    "surface": "#f7fbfa",
+    "bg": "#EBF2F6",
+    "surface": "#F7FAFC",
     "nav-bg": "#0c3a40",
     "nav-text": "#8ec4c0",
-    "nav-hover": "#e8f7f5",
+    "nav-hover": "#EBF2F6",
     "nav-active": "#81D8D0",
-    "text": "#163033",
-    "text-muted": "#4a6468",
-    "text-light": "#6a8284",
-    "accent": "#2eb8b0",
-    "accent-dark": "#1a8c86",
+    "text": "#202428",
+    "text-muted": "#3D4F56",
+    "text-light": "#455860",
+    "accent": "#0F6B70",
+    "accent-dark": "#0C5F64",
     "teal": "#14747a",
-    "silver": "#c4d6d4",
-    "border": "#cfe3e0",
+    "silver": "#C5D4DE",
+    "border": "#C5D4DE",
     "avatarColors": [
       "#0c3a40",
+      "#0F6B70",
       "#14747a",
-      "#2eb8b0",
-      "#81D8D0",
-      "#1a8c86",
-      "#4a6468"
+      "#3D4F56",
+      "#0A585C",
+      "#202428"
     ]
   },
   "trends": [
@@ -34,42 +34,42 @@
       "tag": "Labor",
       "headline": "U.S. Department of Labor",
       "snippet": "Wage rules, worker rights, the official desk. We link out. We do not ingest listings.",
-      "meta": "dol.gov · outbound",
+      "meta": "dol.gov \u00b7 outbound",
       "href": "https://www.dol.gov/"
     },
     {
       "tag": "Stats",
       "headline": "Bureau of Labor Statistics",
       "snippet": "Jobs report, unemployment, CPI. The numbers, not a pitch deck.",
-      "meta": "bls.gov · outbound",
+      "meta": "bls.gov \u00b7 outbound",
       "href": "https://www.bls.gov/"
     },
     {
       "tag": "Outlook",
       "headline": "Occupational Outlook Handbook",
       "snippet": "What the work actually looks like, from BLS. Dummy card, real page.",
-      "meta": "bls.gov/ooh · outbound",
+      "meta": "bls.gov/ooh \u00b7 outbound",
       "href": "https://www.bls.gov/ooh/"
     },
     {
       "tag": "Federal",
       "headline": "USAJOBS",
       "snippet": "Official U.S. government openings. Click out. No scrape.",
-      "meta": "usajobs.gov · outbound",
+      "meta": "usajobs.gov \u00b7 outbound",
       "href": "https://www.usajobs.gov/"
     },
     {
       "tag": "Board",
       "headline": "Indeed",
-      "snippet": "A public job board. Outbound only — not an ATS, not a résumé mill.",
-      "meta": "indeed.com · outbound",
+      "snippet": "A public job board. Outbound only \u2014 not an ATS, not a r\u00e9sum\u00e9 mill.",
+      "meta": "indeed.com \u00b7 outbound",
       "href": "https://www.indeed.com/"
     },
     {
       "tag": "Board",
       "headline": "CareerOneStop",
       "snippet": "DOL-sponsored career tools. We are the room, not the funnel.",
-      "meta": "careeronestop.org · outbound",
+      "meta": "careeronestop.org \u00b7 outbound",
       "href": "https://www.careeronestop.org/"
     }
   ],
@@ -137,7 +137,7 @@
       "snippet": "The warm path. Still not a listing ingest."
     }
   ],
-  "seedNote": "sample — not mixed into the live feed",
+  "seedNote": "sample \u2014 not mixed into the live feed",
   "seed": [
     {
       "id": "p1",
@@ -176,7 +176,7 @@
       "id": "p4",
       "name": "Floor Note",
       "handle": "hiringfloor",
-      "text": "Sample. This is the room, not the funnel. Nobody here is going to polish your résumé for a fee. Talk the job. Talk the loop. Leave the ATS energy at the door.",
+      "text": "Sample. This is the room, not the funnel. Nobody here is going to polish your r\u00e9sum\u00e9 for a fee. Talk the job. Talk the loop. Leave the ATS energy at the door.",
       "hours": 8,
       "likes": 97,
       "replies": 12,
