@@ -1,0 +1,284 @@
+{
+  "siteId": "recruitchat",
+  "name": "recruitchat",
+  "tagline": "The room, not the funnel.",
+  "composePlaceholder": "What's the loop looking like?",
+  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No résumé upload.",
+  "theme": {
+    "bg": "#efece4",
+    "surface": "#f8f5ee",
+    "nav-bg": "#152238",
+    "nav-text": "#a8b4c4",
+    "nav-hover": "#e8ecef",
+    "nav-active": "#f4f1e8",
+    "text": "#1a2230",
+    "text-muted": "#4a5564",
+    "text-light": "#6d7786",
+    "accent": "#b4532a",
+    "accent-dark": "#8e3e1f",
+    "teal": "#3d5a6c",
+    "silver": "#c4bdb0",
+    "border": "#d8d2c6",
+    "avatarColors": [
+      "#152238",
+      "#3d5a6c",
+      "#b4532a",
+      "#2a3f5a",
+      "#8e3e1f",
+      "#4a5564"
+    ]
+  },
+  "trends": [
+    {
+      "tag": "Labor",
+      "headline": "U.S. Department of Labor",
+      "snippet": "Wage rules, worker rights, the official desk. We link out. We do not ingest listings.",
+      "meta": "dol.gov · outbound",
+      "href": "https://www.dol.gov/"
+    },
+    {
+      "tag": "Stats",
+      "headline": "Bureau of Labor Statistics",
+      "snippet": "Jobs report, unemployment, CPI. The numbers, not a pitch deck.",
+      "meta": "bls.gov · outbound",
+      "href": "https://www.bls.gov/"
+    },
+    {
+      "tag": "Outlook",
+      "headline": "Occupational Outlook Handbook",
+      "snippet": "What the work actually looks like, from BLS. Dummy card, real page.",
+      "meta": "bls.gov/ooh · outbound",
+      "href": "https://www.bls.gov/ooh/"
+    },
+    {
+      "tag": "Federal",
+      "headline": "USAJOBS",
+      "snippet": "Official U.S. government openings. Click out. No scrape.",
+      "meta": "usajobs.gov · outbound",
+      "href": "https://www.usajobs.gov/"
+    },
+    {
+      "tag": "Board",
+      "headline": "Indeed",
+      "snippet": "A public job board. Outbound only — not an ATS, not a résumé mill.",
+      "meta": "indeed.com · outbound",
+      "href": "https://www.indeed.com/"
+    },
+    {
+      "tag": "Board",
+      "headline": "CareerOneStop",
+      "snippet": "DOL-sponsored career tools. We are the room, not the funnel.",
+      "meta": "careeronestop.org · outbound",
+      "href": "https://www.careeronestop.org/"
+    }
+  ],
+  "places": [
+    {
+      "tag": "Room",
+      "title": "The hiring floor",
+      "snippet": "Where the loop gets talked, not packaged."
+    },
+    {
+      "tag": "Room",
+      "title": "Phone screen",
+      "snippet": "Fifteen minutes, three canned questions, one real one."
+    },
+    {
+      "tag": "Room",
+      "title": "Onsite / loop day",
+      "snippet": "Five interviews, one lunch, no verdict until Friday."
+    },
+    {
+      "tag": "Room",
+      "title": "Offer week",
+      "snippet": "Comp talk, start dates, and the silence after \"we are aligning.\""
+    },
+    {
+      "tag": "Room",
+      "title": "Recruiter inbox",
+      "snippet": "InMail spam vs the one note that actually read the thread."
+    },
+    {
+      "tag": "Room",
+      "title": "Referral desk",
+      "snippet": "Warm intros, cold ghosts, and \"I forwarded it internally.\""
+    }
+  ],
+  "topics": [
+    {
+      "tag": "Loop",
+      "title": "Interview loops",
+      "snippet": "How many rounds is too many. Dummy talk only."
+    },
+    {
+      "tag": "Spam",
+      "title": "Recruiter spam",
+      "snippet": "Roles you are not, locations you left, salary they will not say."
+    },
+    {
+      "tag": "Timing",
+      "title": "Offer timing",
+      "snippet": "Verbal Friday, paper Tuesday, ghost by Thursday."
+    },
+    {
+      "tag": "Comp",
+      "title": "Comp talk",
+      "snippet": "Bands, equity folklore, and \"competitive.\" Dummy numbers only."
+    },
+    {
+      "tag": "Remote",
+      "title": "Remote vs floor",
+      "snippet": "Hybrid that means three days, posted as \"flexible.\""
+    },
+    {
+      "tag": "Referrals",
+      "title": "Referrals",
+      "snippet": "The warm path. Still not a listing ingest."
+    }
+  ],
+  "seedNote": "sample — not mixed into the live feed",
+  "seed": [
+    {
+      "id": "p1",
+      "name": "Loop Hunter",
+      "handle": "loophunter",
+      "text": "Sample. Four rounds, a \"quick\" case, then a panel that had not read the doc. If your loop needs a map, it is already a no.",
+      "hours": 2,
+      "likes": 128,
+      "replies": 19,
+      "followed": true,
+      "sample": true
+    },
+    {
+      "id": "p2",
+      "name": "Inbox Filter",
+      "handle": "spamfilter",
+      "text": "Sample. Recruiter spam of the week: senior IC role, \"must be in office,\" salary \"competitive,\" company I left two years ago. Delete is a skill.",
+      "hours": 3,
+      "likes": 86,
+      "replies": 31,
+      "followed": true,
+      "sample": true
+    },
+    {
+      "id": "p3",
+      "name": "Offer Clock",
+      "handle": "offertiming",
+      "text": "Sample. Verbal Friday. \"Paper is coming Monday.\" It is Wednesday. The silence is doing more talking than the HM.",
+      "hours": 5,
+      "likes": 241,
+      "replies": 64,
+      "followed": false,
+      "sample": true
+    },
+    {
+      "id": "p4",
+      "name": "Floor Note",
+      "handle": "hiringfloor",
+      "text": "Sample. This is the room, not the funnel. Nobody here is going to polish your résumé for a fee. Talk the job. Talk the loop. Leave the ATS energy at the door.",
+      "hours": 8,
+      "likes": 97,
+      "replies": 12,
+      "followed": true,
+      "sample": true
+    },
+    {
+      "id": "p5",
+      "name": "Panel Ghost",
+      "handle": "panelghost",
+      "text": "Sample. Onsite was six people. Two asked the same system-design prompt. One asked \"where do you see yourself\" like it was 2014. Still waiting on the debrief.",
+      "hours": 11,
+      "likes": 156,
+      "replies": 8,
+      "followed": false,
+      "sample": true
+    },
+    {
+      "id": "p6",
+      "name": "Recruiter Tea",
+      "handle": "recruitertea",
+      "text": "Sample. Agency ping at 7am: \"urgent req, 3 years experience, 10 years preferred, $20k under market, start next week.\" I archived it with feeling.",
+      "hours": 14,
+      "likes": 312,
+      "replies": 47,
+      "followed": true,
+      "sample": true
+    },
+    {
+      "id": "p7",
+      "name": "Band Talk",
+      "handle": "bandtalk",
+      "text": "Sample. They said the band is \"wide.\" Wide enough to hide the number until after you fly. Ask for the range in the first screen. Dummy advice, real habit.",
+      "hours": 18,
+      "likes": 73,
+      "replies": 9,
+      "followed": false,
+      "sample": true
+    },
+    {
+      "id": "p8",
+      "name": "Referral Desk",
+      "handle": "referraldesk",
+      "text": "Sample. Warm intro landed. Recruiter replied in nine minutes. Process still took six weeks. Speed of the first email is not speed of the offer.",
+      "hours": 22,
+      "likes": 118,
+      "replies": 16,
+      "followed": true,
+      "sample": true
+    }
+  ],
+  "notifs": [
+    {
+      "id": "n1",
+      "text": "@loophunter liked your take on round four. Dummy like.",
+      "time": "1h",
+      "unread": true
+    },
+    {
+      "id": "n2",
+      "text": "@spamfilter mentioned you in a recruiter-spam thread. Sample.",
+      "time": "3h",
+      "unread": true
+    },
+    {
+      "id": "n3",
+      "text": "@offertiming started following you. Dummy follow.",
+      "time": "Yesterday",
+      "unread": true
+    }
+  ],
+  "threads": [
+    {
+      "id": "t1",
+      "name": "Loop Hunter",
+      "handle": "loophunter",
+      "preview": "How many rounds before you walk?",
+      "messages": [
+        {
+          "me": false,
+          "text": "How many rounds before you walk?"
+        },
+        {
+          "me": true,
+          "text": "Four if they pay travel. Three if they do not. Sample talk."
+        }
+      ]
+    },
+    {
+      "id": "t2",
+      "name": "Inbox Filter",
+      "handle": "spamfilter",
+      "preview": "That InMail was not even close.",
+      "messages": [
+        {
+          "me": false,
+          "text": "That InMail was not even close."
+        },
+        {
+          "me": true,
+          "text": "Wrong title, wrong city, wrong decade. Dummy inbox."
+        }
+      ]
+    }
+  ]
+}
