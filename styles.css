@@ -1,20 +1,20 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #efece4;
-  --surface:          #f8f5ee;
-  --nav-bg:          #152238;
-  --nav-text:     #a8b4c4;
-  --nav-hover:     #e8ecef;
-  --nav-active:     #f4f1e8;
-  --text:          #1a2230;
-  --text-muted:     #4a5564;
-  --text-light:     #6d7786;
-  --accent:          #b4532a;
-  --accent-dark:     #8e3e1f;
-  --teal:          #3d5a6c;
-  --silver:          #c4bdb0;
-  --border:          #d8d2c6;
+  --bg:          #eef6f4;
+  --surface:          #f7fbfa;
+  --nav-bg:          #0c3a40;
+  --nav-text:     #8ec4c0;
+  --nav-hover:     #e8f7f5;
+  --nav-active:     #81D8D0;
+  --text:          #163033;
+  --text-muted:     #4a6468;
+  --text-light:     #6a8284;
+  --accent:          #2eb8b0;
+  --accent-dark:     #1a8c86;
+  --teal:          #14747a;
+  --silver:          #c4d6d4;
+  --border:          #cfe3e0;
   --nav-w:          240px;
   --right-w:          280px;
   --ui:          Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -165,7 +165,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #b4532a;
+  color: var(--accent);
   border: 1px solid rgba(232,160,112,0.45);
   border-radius: 999px;
   padding: 0.08rem 0.4rem;
@@ -225,7 +225,7 @@ body {
 .right-panel-kicker {
   font-size: 0.7rem; font-weight: 700;
   letter-spacing: 0.18em; text-transform: uppercase;
-  color: #b4532a; margin-bottom: 0.4rem;
+  color: var(--accent); margin-bottom: 0.4rem;
 }
 .right-panel-title {
   font-family: var(--display);
