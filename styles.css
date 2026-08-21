@@ -1,10 +1,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Icy field everywhere #EBF2F6. Rails match center. Rail ink passes WCAG AA. */
+  /* Icy center #EBF2F6. Seafoam rails #78D1B6. Rail ink passes WCAG AA. */
   --bg:          #EBF2F6;
   --surface:          #F7FAFC;
-  --nav-bg:          #EBF2F6;
+  --nav-bg:          #78D1B6;
   --nav-text:     #2A3148;
   --nav-hover:     #1E2438;
   --nav-active:     #2F3A6C;
@@ -47,7 +47,7 @@ body {
   z-index: 100;
   overflow-y: auto;
   transition: transform 0.28s ease;
-  box-shadow: 4px 0 0 rgba(47, 58, 108, 0.10);
+  box-shadow: 4px 0 20px rgba(47, 58, 108, 0.08);
 }
 .sidebar-brand {
   text-align: center;
@@ -215,7 +215,7 @@ body {
   background: var(--nav-bg);
   display: flex; flex-direction: column;
   z-index: 100; overflow-y: auto;
-  box-shadow: -4px 0 0 rgba(47, 58, 108, 0.10);
+  box-shadow: -4px 0 20px rgba(47, 58, 108, 0.08);
   transition: transform 0.28s ease;
 }
 .right-panel-header {
