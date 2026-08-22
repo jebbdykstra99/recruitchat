@@ -1,10 +1,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Icy center #EBF2F6. Seafoam rails #78D1B6. Rail ink passes WCAG AA. */
+  /* Icy field #EBF2F6 for center and rails. Navy ink. No seafoam. */
   --bg:          #EBF2F6;
   --surface:          #F7FAFC;
-  --nav-bg:          #78D1B6;
+  --nav-bg:          #EBF2F6;
   --nav-text:     #2A3148;
   --nav-hover:     #1E2438;
   --nav-active:     #2F3A6C;
