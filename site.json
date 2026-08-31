@@ -4,7 +4,7 @@
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
   "composePlaceholder": "What's the loop looking like?",
-  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No r\u00e9sum\u00e9 upload.",
+  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No résumé upload.",
   "theme": {
     "bg": "#EBF2F6",
     "surface": "#F7FAFC",
@@ -34,42 +34,42 @@
       "tag": "Labor",
       "headline": "U.S. Department of Labor",
       "snippet": "Wage rules, worker rights, the official desk. We link out. We do not ingest listings.",
-      "meta": "dol.gov \u00b7 outbound",
+      "meta": "dol.gov · outbound",
       "href": "https://www.dol.gov/"
     },
     {
       "tag": "Stats",
       "headline": "Bureau of Labor Statistics",
       "snippet": "Jobs report, unemployment, CPI. The numbers, not a pitch deck.",
-      "meta": "bls.gov \u00b7 outbound",
+      "meta": "bls.gov · outbound",
       "href": "https://www.bls.gov/"
     },
     {
       "tag": "Outlook",
       "headline": "Occupational Outlook Handbook",
       "snippet": "What the work actually looks like, from BLS. Dummy card, real page.",
-      "meta": "bls.gov/ooh \u00b7 outbound",
+      "meta": "bls.gov/ooh · outbound",
       "href": "https://www.bls.gov/ooh/"
     },
     {
       "tag": "Federal",
       "headline": "USAJOBS",
       "snippet": "Official U.S. government openings. Click out. No scrape.",
-      "meta": "usajobs.gov \u00b7 outbound",
+      "meta": "usajobs.gov · outbound",
       "href": "https://www.usajobs.gov/"
     },
     {
       "tag": "Board",
       "headline": "Indeed",
-      "snippet": "A public job board. Outbound only \u2014 not an ATS, not a r\u00e9sum\u00e9 mill.",
-      "meta": "indeed.com \u00b7 outbound",
+      "snippet": "A public job board. Outbound only — not an ATS, not a résumé mill.",
+      "meta": "indeed.com · outbound",
       "href": "https://www.indeed.com/"
     },
     {
       "tag": "Board",
       "headline": "CareerOneStop",
       "snippet": "DOL-sponsored career tools. We are the room, not the funnel.",
-      "meta": "careeronestop.org \u00b7 outbound",
+      "meta": "careeronestop.org · outbound",
       "href": "https://www.careeronestop.org/"
     }
   ],
@@ -137,7 +137,7 @@
       "snippet": "The warm path. Still not a listing ingest."
     }
   ],
-  "seedNote": "sample \u2014 not mixed into the live feed",
+  "seedNote": "sample — not mixed into the live feed",
   "seed": [
     {
       "id": "p1",
@@ -176,7 +176,7 @@
       "id": "p4",
       "name": "Floor Note",
       "handle": "hiringfloor",
-      "text": "Sample. This is the room, not the funnel. Nobody here is going to polish your r\u00e9sum\u00e9 for a fee. Talk the job. Talk the loop. Leave the ATS energy at the door.",
+      "text": "Sample. This is the room, not the funnel. Nobody here is going to polish your résumé for a fee. Talk the job. Talk the loop. Leave the ATS energy at the door.",
       "hours": 8,
       "likes": 97,
       "replies": 12,
@@ -281,5 +281,28 @@
         }
       ]
     }
-  ]
+  ],
+  "rail": {
+    "kind": "porch",
+    "title": "Room Brief",
+    "kicker": "The room, not the funnel",
+    "meta": "This room",
+    "footer": "One line, no résumé. Ads off. Not a job scrape.",
+    "outbound": [
+      {
+        "tag": "Work",
+        "headline": "USAJOBS",
+        "snippet": "Public listings. The room is not the funnel.",
+        "url": "https://www.usajobs.gov/",
+        "meta": "Official · link-out"
+      }
+    ],
+    "porch": {
+      "prompt": "One line, no résumé",
+      "options": [
+        "A role",
+        "A hire"
+      ]
+    }
+  }
 }
