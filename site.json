@@ -287,7 +287,7 @@
     "title": "Room Brief",
     "kicker": "The room, not the funnel",
     "meta": "This room",
-    "footer": "One line, no résumé. Ads off. Not a job scrape.",
+    "footer": "One line, no resume. Ads off. Not a job scrape.",
     "outbound": [
       {
         "tag": "Work",
@@ -298,7 +298,7 @@
       }
     ],
     "porch": {
-      "prompt": "One line, no résumé",
+      "prompt": "One line, no resume",
       "options": [
         "A role",
         "A hire"
