@@ -302,7 +302,8 @@
       "options": [
         "A role",
         "A hire"
-      ]
+      ],
+      "dwellMs": 9000
     }
   }
 }
