@@ -137,6 +137,311 @@
       "snippet": "The warm path. Still not a listing ingest."
     }
   ],
+  "nests": [
+    {
+      "slug": "loops",
+      "label": "Interview loops",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "How many rounds is too many. The loop gets talked, not packaged.",
+      "nav": true,
+      "rankings": [
+        {
+          "id": "loops-rounds",
+          "title": "Common walk-away thresholds (talk only)",
+          "items": [
+            {
+              "rank": 1,
+              "name": "4+ rounds",
+              "note": "Travel paid or walk",
+              "priceHint": null,
+              "url": null
+            },
+            {
+              "rank": 2,
+              "name": "3 rounds",
+              "note": "Default for senior IC talk",
+              "priceHint": null,
+              "url": null
+            },
+            {
+              "rank": 3,
+              "name": "Take-home + 2",
+              "note": "Still a loop day",
+              "priceHint": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "spam",
+      "label": "Recruiter spam",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Wrong title, wrong city, salary they will not say.",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "comp",
+      "label": "Comp talk",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Bands, equity folklore, and “competitive.” Numbers stay talk — not listings.",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "remote",
+      "label": "Remote vs floor",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Hybrid that means three days, posted as flexible.",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "referrals",
+      "label": "Referrals",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Warm intros, cold ghosts, and “I forwarded it internally.”",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "offers",
+      "label": "Offer week",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Verbal Friday, paper Tuesday, silence after “we are aligning.”",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "screens",
+      "label": "Phone screen",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Fifteen minutes, three canned questions, one real one.",
+      "nav": true,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "onsite",
+      "label": "Onsite / loop day",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "Five interviews, one lunch, no verdict until Friday.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "inbox",
+      "label": "Recruiter inbox",
+      "parent": null,
+      "kind": "topic",
+      "blurb": "InMail spam vs the one note that actually read the thread.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "engineering",
+      "label": "Engineering",
+      "parent": null,
+      "kind": "role",
+      "blurb": "IC and staff eng talk. No résumé upload.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "product",
+      "label": "Product",
+      "parent": null,
+      "kind": "role",
+      "blurb": "PM loops, discovery, and shipping talk.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "design",
+      "label": "Design",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Product design, research, systems.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "data",
+      "label": "Data",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Analytics, ML, data eng — the work, not the funnel.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "sales",
+      "label": "Sales",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Quota, ramp, and the real territory map.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "marketing",
+      "label": "Marketing",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Growth, brand, demand — room talk.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "people",
+      "label": "People / Recruiting",
+      "parent": null,
+      "kind": "role",
+      "blurb": "TA and People Ops in the room, not the ATS.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "legal",
+      "label": "Legal",
+      "parent": null,
+      "kind": "role",
+      "blurb": "In-house counsel and compliance hiring talk.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "finance",
+      "label": "Finance",
+      "parent": null,
+      "kind": "role",
+      "blurb": "FP&A, controllership, corp finance.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "customer-success",
+      "label": "Customer success",
+      "parent": null,
+      "kind": "role",
+      "blurb": "CS, AM, support leadership.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "founders",
+      "label": "Founders hiring",
+      "parent": null,
+      "kind": "role",
+      "blurb": "First 10 / first 50. Still not a listing ingest.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "managers",
+      "label": "Managers",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Hiring managers trading notes on loops.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "executives",
+      "label": "Executives",
+      "parent": null,
+      "kind": "role",
+      "blurb": "VP+ searches talked as peers, not pitches.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "federal",
+      "label": "Federal / USAJOBS",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Public sector path — outbound to usajobs, no scrape.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "startups",
+      "label": "Startups",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Series A–C hiring floor energy.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    },
+    {
+      "slug": "enterprise",
+      "label": "Enterprise",
+      "parent": null,
+      "kind": "role",
+      "blurb": "Big-company loops and leveling talk.",
+      "nav": false,
+      "rankings": [],
+      "reviews": [],
+      "railPins": []
+    }
+  ],
   "stories": {
     "enabled": true,
     "maxSeconds": 15,
