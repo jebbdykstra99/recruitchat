@@ -12,6 +12,18 @@
   let TRENDS = [];
   let PLACES = [];
   let TOPICS = [];
+  let NESTS = [];
+  let currentNest = null;
+  var paintedNestSlug = null;
+
+  var NEST_RESERVED = {
+    '': 1, home: 1, feed: 1, thoughts: 1, following: 1, explore: 1,
+    notifications: 1, chat: 1, profile: 1, news: 1, hot: 1, new: 1,
+    'index.html': 1, 'terms.html': 1, 'privacy.html': 1, 'factory.js': 1,
+    'styles.css': 1, 'site.json': 1, 'robots.txt': 1, 'favicon.svg': 1,
+    'favicon.ico': 1, 'apple-touch-icon.png': 1, 'og.png': 1, '404.html': 1,
+    cname: 1
+  };
 
   let fbAuth = null;
   let fbDb = null;
@@ -585,7 +597,8 @@
       parentId: d.parentId || null,
       live: true,
       imageUrl: d.imageUrl || null,
-      poll: d.poll || null
+      poll: d.poll || null,
+      nestSlug: d.nestSlug || ''
     };
   }
 
@@ -643,7 +656,8 @@
 
   function highlightSocial(name) {
     document.querySelectorAll('.nav-social-link').forEach(function (l) { l.classList.remove('active'); });
-    const el = document.querySelector('[data-social="' + name + '"]');
+    if (!name) return;
+    const el = document.querySelector('[data-social="' + name + '"]') || document.querySelector('[data-nest="' + name + '"]');
     if (el) el.classList.add('active');
   }
 
@@ -661,6 +675,335 @@
     window.scrollTo(0, 0);
   }
 
+  function nestSlugNorm(s) {
+    return String(s || '').replace(/^#/, '').trim().toLowerCase();
+  }
+
+  function nestSlugFromPathname(pathname) {
+    var parts = String(pathname || '').split('/').filter(Boolean);
+    if (!parts.length || parts.length > 1) return '';
+    var first = parts[0];
+    try { first = decodeURIComponent(first); } catch (e) { /* keep */ }
+    first = nestSlugNorm(first);
+    if (!first || NEST_RESERVED[first]) return '';
+    return first;
+  }
+
+  function findNest(slug) {
+    var key = nestSlugNorm(slug);
+    if (!key) return null;
+    for (var i = 0; i < NESTS.length; i++) {
+      if (nestSlugNorm(NESTS[i].slug) === key) return NESTS[i];
+    }
+    return null;
+  }
+
+  function resolveNestFromPath() {
+    return findNest(nestSlugFromPathname(location.pathname));
+  }
+
+  function nestHasActivity(slug) {
+    var key = nestSlugNorm(slug);
+    if (!key) return false;
+    for (var i = 0; i < livePosts.length; i++) {
+      if (nestSlugNorm(livePosts[i].nestSlug) === key) return true;
+    }
+    return false;
+  }
+
+  function nestNavVisible(nest) {
+    if (!nest || !nest.slug) return false;
+    if (nest.nav === false) return false;
+    if (nestHasActivity(nest.slug)) return true;
+    return nest.nav === true;
+  }
+
+  function visibleNests() {
+    return NESTS.filter(nestNavVisible);
+  }
+
+  function nestPath(slug) {
+    var nest = findNest(slug);
+    return nest ? '/' + nest.slug : '/';
+  }
+
+  function currentUrl() {
+    return location.pathname + location.search + location.hash;
+  }
+
+  function setUrl(path, hash) {
+    var next = (path || '/') + (location.search || '') + (hash || '');
+    if (currentUrl() === next) { applyRoute(); return; }
+    history.pushState({ path: path }, '', next);
+    applyRoute();
+  }
+
+  function restoreBouncedPath() {
+    try {
+      var raw = sessionStorage.getItem('subx.restorePath');
+      if (!raw) return;
+      sessionStorage.removeItem('subx.restorePath');
+      if (raw.charAt(0) !== '/' || raw.indexOf('//') !== -1) return;
+      history.replaceState(null, '', raw);
+    } catch (e) { /* private mode */ }
+  }
+
+  function nestRailCards(nest) {
+    if (!nest) return [];
+    var cards = [];
+    var room = (site && site.name) || SITE_ID || 'room';
+    if (nest.blurb) {
+      cards.push({
+        tag: nest.kind || 'Nest',
+        headline: nest.label || nest.slug,
+        snippet: nest.blurb,
+        meta: 'Nest · ' + room,
+        url: ''
+      });
+    }
+    var ranks = nest.rankings || [];
+    for (var r = 0; r < ranks.length; r++) {
+      var pack = ranks[r];
+      if (!pack) continue;
+      var items = pack.items || [];
+      var bits = [];
+      for (var i = 0; i < items.length && bits.length < 3; i++) {
+        var it = items[i];
+        if (!it || !it.name) continue;
+        bits.push((it.rank != null ? it.rank + '. ' : '') + it.name);
+      }
+      cards.push({
+        tag: 'Ranking',
+        headline: pack.title || 'Ranking',
+        snippet: bits.join(' · ') || (pack.title || ''),
+        meta: (nest.label || nest.slug) + (items[0] && items[0].priceHint ? ' · ' + items[0].priceHint : ''),
+        url: (items[0] && items[0].url) || ''
+      });
+    }
+    var reviews = nest.reviews || [];
+    for (var v = 0; v < reviews.length; v++) {
+      var rev = reviews[v];
+      if (!rev) continue;
+      cards.push({
+        tag: 'Review',
+        headline: (rev.stars != null ? String(rev.stars) + '★ ' : '') + (rev.subject || 'Review'),
+        snippet: rev.snippet || '',
+        meta: [nest.label || nest.slug, rev.region].filter(Boolean).join(' · '),
+        url: rev.url || ''
+      });
+    }
+    var pins = nest.railPins || [];
+    for (var p = 0; p < pins.length; p++) {
+      var pin = pins[p];
+      if (!pin || !pin.headline) continue;
+      cards.push({
+        tag: pin.tag || 'Pin',
+        headline: pin.headline,
+        snippet: pin.snippet || '',
+        meta: pin.meta || (nest.label || nest.slug),
+        url: pin.url || ''
+      });
+    }
+    return cards;
+  }
+
+  function applyNestRailChrome(nest) {
+    var kicker = 'Nest · ' + ((site && site.name) || SITE_ID || 'room');
+    var title = nest.label || nest.slug;
+    var footer = nest.blurb || 'Nest rail from site.json. Not a news ingest.';
+    var rk = document.querySelector('.right-panel-kicker');
+    var rt = document.querySelector('.right-panel-title');
+    var rf = document.querySelector('.right-panel-footer p');
+    var nk = document.querySelector('#page-news .page-kicker');
+    var nh = document.querySelector('#page-news h1');
+    if (rk) rk.textContent = kicker;
+    if (nk) nk.textContent = kicker;
+    if (rt) rt.textContent = title;
+    if (nh) nh.textContent = title;
+    if (rf) rf.textContent = footer;
+  }
+
+  function ensureNestCss() {
+    if (document.getElementById('nest-css')) return;
+    var st = document.createElement('style');
+    st.id = 'nest-css';
+    st.textContent =
+      '.nav-nests{list-style:none;margin-top:0.35rem;padding-top:0.35rem;border-top:1px solid rgba(155,184,192,0.18);}' +
+      '.nav-nests-label{padding:0.35rem 1.5rem 0.15rem;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--nav-text);opacity:0.75;}' +
+      '.nav-nests .nav-social-link{font-size:0.88rem;padding:0.35rem 1.5rem;min-height:38px;}' +
+      '.nest-chrome{padding:0.75rem 1.3rem 0.65rem;border-bottom:1px solid var(--border,#e4d6c4);background:var(--surface,#fffaf3);}' +
+      '.nest-chrome-kicker{font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light,#6d8288);}' +
+      '.nest-chrome-label{font-family:var(--display);font-size:1.25rem;font-weight:700;line-height:1.2;}' +
+      '.nest-chrome-blurb{font-size:0.85rem;color:var(--text-muted,#4a5f66);margin-top:0.2rem;}' +
+      '.nest-chrome-home{display:inline-block;margin-top:0.4rem;font-size:0.78rem;color:var(--teal,#2a7a8c);}';
+    document.head.appendChild(st);
+  }
+
+  function ensureNestChrome() {
+    var el = document.getElementById('nest-chrome');
+    if (el) return el;
+    el = document.createElement('div');
+    el.id = 'nest-chrome';
+    el.className = 'nest-chrome';
+    el.hidden = true;
+    var tabs = document.querySelector('.thoughts-tabs');
+    if (tabs && tabs.parentNode) tabs.parentNode.insertBefore(el, tabs);
+    return el;
+  }
+
+  function applyNestChrome() {
+    ensureNestCss();
+    var nest = currentNest;
+    var title = (site && site.name) || SITE_ID || 'room';
+    var tag = (site && site.tagline) || '';
+    document.title = nest
+      ? ((nest.label || nest.slug) + ' — ' + title)
+      : (tag ? (title + ' — ' + tag) : title);
+    var brandSub = document.querySelector('.brand-sub');
+    if (brandSub) brandSub.textContent = nest ? (nest.label || nest.slug) : tag;
+    var input = document.getElementById('thoughts-compose-input');
+    if (input) {
+      var ph = nest
+        ? ('What about ' + (nest.label || nest.slug) + '?')
+        : ((site && site.composePlaceholder) || input.getAttribute('data-ph') || '');
+      if (ph) {
+        if (!nest && site && site.composePlaceholder) input.setAttribute('data-ph', site.composePlaceholder);
+        input.placeholder = ph;
+      }
+    }
+    var bar = ensureNestChrome();
+    if (bar) {
+      if (!nest) {
+        bar.hidden = true;
+        bar.innerHTML = '';
+      } else {
+        bar.hidden = false;
+        bar.innerHTML =
+          '<div class="nest-chrome-kicker">Nest</div>' +
+          '<div class="nest-chrome-label">' + escapeHtml(nest.label || nest.slug) + '</div>' +
+          (nest.blurb ? '<div class="nest-chrome-blurb">' + escapeHtml(nest.blurb) + '</div>' : '') +
+          '<a class="nest-chrome-home" href="#home" data-social="home">Back to home room</a>';
+      }
+    }
+    document.body.classList.toggle('is-nest', !!nest);
+    if (nest) {
+      abortPorchForNest();
+      dismissRailOverlay('nest');
+      if (paintedNestSlug !== nest.slug) {
+        paintedNestSlug = nest.slug;
+        applyNestRailChrome(nest);
+        paintRail(nestRailCards(nest));
+      }
+    } else if (paintedNestSlug) {
+      paintedNestSlug = null;
+      applyRailChrome();
+      renderTrends(true);
+    }
+    refreshNestSurfaces();
+  }
+
+  function renderNestNav() {
+    var nav = document.querySelector('.sidebar nav');
+    if (!nav) return;
+    var list = document.getElementById('nav-nests');
+    var shown = visibleNests();
+    if (!shown.length) {
+      if (list) list.innerHTML = '';
+      return;
+    }
+    if (!list) {
+      list = document.createElement('ul');
+      list.id = 'nav-nests';
+      list.className = 'nav-nests';
+      var mainUl = nav.querySelector('ul');
+      if (mainUl && mainUl.parentNode) mainUl.after(list);
+      else nav.insertBefore(list, nav.firstChild);
+    }
+    var html = '<li class="nav-nests-label">Nests</li>';
+    for (var i = 0; i < shown.length; i++) {
+      var n = shown[i];
+      var active = currentNest && currentNest.slug === n.slug ? ' active' : '';
+      html += '<li><a class="nav-social-link' + active + '" href="' + escapeHtml(nestPath(n.slug)) + '" data-nest="' + escapeHtml(n.slug) + '">' +
+        escapeHtml(n.label || n.slug) + '</a></li>';
+    }
+    list.innerHTML = html;
+  }
+
+  function refreshNestSurfaces() {
+    renderNestNav();
+    var pane = document.getElementById('explore-pane-nests');
+    if (pane) fillExploreNests(pane);
+  }
+
+  function nestExploreCards() {
+    return visibleNests().map(function (n) {
+      return {
+        tag: n.kind || 'Nest',
+        title: n.label || n.slug,
+        snippet: n.blurb || ('/' + n.slug),
+        slug: n.slug
+      };
+    });
+  }
+
+  function fillExploreNests(pane, list) {
+    if (!pane) return;
+    var cards = list || nestExploreCards();
+    if (!cards.length) {
+      pane.innerHTML = '<p class="empty-note">No nests with activity yet. Quiet nests stay at /{slug}.</p>';
+      return;
+    }
+    pane.innerHTML = cards.map(function (c) {
+      return '<a class="explore-card" href="' + escapeHtml(nestPath(c.slug)) + '" data-nest="' + escapeHtml(c.slug) + '">' +
+        '<div class="explore-card-tag">' + escapeHtml(c.tag) + '</div>' +
+        '<div class="explore-card-title">' + escapeHtml(c.title) + '</div>' +
+        '<div class="explore-card-snippet">' + escapeHtml(c.snippet) + '</div></a>';
+    }).join('');
+  }
+
+  function ensureExploreNestTab() {
+    var tabs = document.querySelector('.explore-tabs');
+    var pane = document.getElementById('explore-pane-nests');
+    var tab = document.querySelector('[data-explore-tab="nests"]');
+    var shown = visibleNests();
+    if (!shown.length) {
+      if (tab) tab.hidden = true;
+      if (pane) {
+        pane.hidden = true;
+        pane.classList.remove('active');
+      }
+      return null;
+    }
+    if (!tab && tabs) {
+      tab = document.createElement('button');
+      tab.className = 'thoughts-tab';
+      tab.setAttribute('data-explore-tab', 'nests');
+      tab.setAttribute('type', 'button');
+      tab.textContent = 'Nests';
+      tabs.appendChild(tab);
+    }
+    if (tab) tab.hidden = false;
+    if (!pane) {
+      pane = document.createElement('div');
+      pane.className = 'explore-pane';
+      pane.id = 'explore-pane-nests';
+      var topics = document.getElementById('explore-pane-topics');
+      if (topics && topics.parentNode) topics.parentNode.appendChild(pane);
+    }
+    if (pane) pane.hidden = false;
+    fillExploreNests(pane);
+    return pane;
+  }
+
+  function postNestSlug(parentId) {
+    if (currentNest) return currentNest.slug;
+    if (parentId) {
+      var p = findPost(parentId);
+      if (p && p.nestSlug) return p.nestSlug;
+    }
+    return '';
+  }
+
   function normalizeRoute(route) {
     let id = String(route || '').replace(/^#/, '').trim();
     if (!id) id = 'home';
@@ -668,11 +1011,25 @@
     return id;
   }
   function routeFromHash() { return normalizeRoute(window.location.hash); }
+  function goNest(slug) {
+    var nest = findNest(slug);
+    if (!nest) { setUrl('/', '#home'); return; }
+    setUrl('/' + nest.slug, '#home');
+  }
+  function goRoom() {
+    if (currentNest) goNest(currentNest.slug);
+    else go('home');
+  }
   function go(route) {
     const id = normalizeRoute(route);
-    const hash = '#' + id;
-    if (location.hash === hash) { applyRoute(); return; }
-    location.hash = hash;
+    if (findNest(id)) { goNest(id); return; }
+    if (id === 'home' || id === 'feed' || id === 'thoughts') {
+      setUrl('/', '#home');
+      return;
+    }
+    var slug = nestSlugFromPathname(location.pathname);
+    var path = findNest(slug) ? '/' + slug : '/';
+    setUrl(path, '#' + id);
   }
 
   function selectThoughtsTab(tab) {
@@ -685,7 +1042,10 @@
 
   function applyRoute() {
     closeMobileNav();
+    currentNest = resolveNestFromPath();
+    applyNestChrome();
     const raw = routeFromHash();
+    var roomHighlight = currentNest ? currentNest.slug : 'home';
 
     if (raw === 'following') {
       closeSocialOverlays();
@@ -697,14 +1057,14 @@
     if (raw === 'hot' || raw === 'new') {
       closeSocialOverlays();
       showContentPage('thoughts');
-      highlightSocial('home');
+      highlightSocial(roomHighlight);
       selectThoughtsTab(raw);
       return;
     }
     if (raw === 'home' || raw === 'feed' || raw === 'thoughts') {
       closeSocialOverlays();
       showContentPage('thoughts');
-      highlightSocial('home');
+      highlightSocial(roomHighlight);
       selectThoughtsTab('foryou');
       return;
     }
@@ -720,7 +1080,7 @@
     }
     closeSocialOverlays();
     showContentPage('thoughts');
-    highlightSocial('home');
+    highlightSocial(roomHighlight);
   }
 
   function renderPostMedia(post) {
@@ -799,7 +1159,11 @@
   }
 
   function topLevelPosts() {
-    return livePosts.filter(function (p) { return !p.parentId && !(p.authorUid && blockedUids[p.authorUid]); });
+    return livePosts.filter(function (p) {
+      if (p.parentId || (p.authorUid && blockedUids[p.authorUid])) return false;
+      if (currentNest) return p.nestSlug === currentNest.slug;
+      return true;
+    });
   }
 
   function repliesFor(parentId) {
@@ -833,9 +1197,12 @@
     if (currentTab === 'new') posts.sort(function (a, b) { return (b.ms || 0) - (a.ms || 0); });
 
     if (!posts.length) {
-      var empty = (site && site.emptyState) || 'This room is empty. Sign in to post. Guest can browse only.';
+      var empty = currentNest
+        ? ('No posts in ' + (currentNest.label || currentNest.slug) + ' yet. This nest is live at /' + currentNest.slug + '. Sign in to post the first take.')
+        : ((site && site.emptyState) || 'This room is empty. Sign in to post. Guest can browse only.');
       el.innerHTML = '<div class="post-empty">' + escapeHtml(empty) + '</div>';
       refreshPorchUi();
+      refreshNestSurfaces();
       return;
     }
 
@@ -845,6 +1212,7 @@
     }).join('');
     highlightDeepPost();
     refreshPorchUi();
+    refreshNestSurfaces();
   }
 
   var RAIL_MAX = 3;
@@ -919,11 +1287,272 @@
 
   function paintRail(items) {
     ensureRailCss();
-    var html = (items || []).map(renderTrendCard).join('') + porchCardHtml();
+    var html = (items || []).map(renderTrendCard).join('') + (currentNest ? '' : porchCardHtml());
     var rail = document.getElementById('news-feed');
     var page = document.getElementById('news-page-list');
     if (rail) rail.innerHTML = html;
     if (page) page.innerHTML = html;
+    maybeShowRailOverlay();
+  }
+
+  var railOverlayUiReady = false;
+  var railOverlayTimer = null;
+  var railOverlayDeadline = 0;
+  var railOverlayRemaining = 0;
+  var railOverlayPrevFocus = null;
+  var railOverlayOnKey = null;
+  var railOverlayOnClick = null;
+  var railOverlayWired = false;
+
+  function overlayCfg() {
+    var ov = railCfg().overlay;
+    return (ov && typeof ov === 'object') ? ov : null;
+  }
+
+  function overlayEnabled() {
+    var ov = overlayCfg();
+    return !!(ov && ov.enabled);
+  }
+
+  function overlayMs() {
+    var n = overlayCfg() && parseInt(overlayCfg().ms, 10);
+    return (n > 0) ? n : 7000;
+  }
+
+  function overlayStorageKey() {
+    return 'subx.railOverlay.' + (SITE_ID || '');
+  }
+
+  function overlaySeen() {
+    try { return sessionStorage.getItem(overlayStorageKey()) === '1'; } catch (e) { return false; }
+  }
+
+  function markOverlaySeen() {
+    try { sessionStorage.setItem(overlayStorageKey(), '1'); } catch (e) { /* private mode */ }
+  }
+
+  function railOfficialUrls() {
+    var cfg = railCfg();
+    var set = {};
+    function add(u) {
+      var s = String(u || '').trim();
+      if (/^https:\/\//i.test(s)) set[s] = true;
+    }
+    add(cfg.forecastPage);
+    add(cfg.forecastUrl);
+    add(cfg.alertsUrl);
+    var outbound = cfg.outbound || [];
+    for (var i = 0; i < outbound.length; i++) add(outbound[i] && outbound[i].url);
+    return set;
+  }
+
+  function overlayLinks() {
+    var ov = overlayCfg();
+    var configured = (ov && ov.links) || [];
+    var allow = railOfficialUrls();
+    var out = [];
+    for (var i = 0; i < configured.length && out.length < 2; i++) {
+      var link = configured[i];
+      if (!link || !link.url || !link.label) continue;
+      var url = String(link.url).trim();
+      if (!allow[url]) continue;
+      out.push({ label: String(link.label), url: url });
+    }
+    if (!out.length && railCfg().forecastPage && allow[railCfg().forecastPage]) {
+      out.push({ label: 'Official forecast', url: railCfg().forecastPage });
+    }
+    return out;
+  }
+
+  function overlayHeadline() {
+    var ov = overlayCfg();
+    if (ov && ov.headline) return String(ov.headline);
+    var cfg = railCfg();
+    if (cfg.meta) return String(cfg.meta);
+    if (cfg.kicker) return String(cfg.kicker);
+    var first = document.querySelector('#news-feed .news-item-headline');
+    if (first && first.textContent) return first.textContent.trim();
+    return cfg.title || 'Room Brief';
+  }
+
+  function railPanelIsVisible() {
+    var panel = document.getElementById('right-panel');
+    if (!panel) return false;
+    if (document.body.classList.contains('right-collapsed')) return false;
+    var cs = window.getComputedStyle(panel);
+    if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+    var rect = panel.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.right > 8;
+  }
+
+  function overlayFadeMs() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 0;
+    } catch (e) { /* ignore */ }
+    return 200;
+  }
+
+  function sendPixel(eventName) {
+    try {
+      var k = 'subx.vid';
+      var v = localStorage.getItem(k);
+      if (!v) {
+        v = Math.random().toString(36).slice(2) + Date.now().toString(36);
+        localStorage.setItem(k, v);
+      }
+      var url = 'https://us-central1-subx-skins.cloudfunctions.net/pixel?s=' +
+        encodeURIComponent(SITE_ID) + '&v=' + encodeURIComponent(v);
+      if (eventName) url += '&e=' + encodeURIComponent(eventName);
+      if (navigator.sendBeacon) navigator.sendBeacon(url);
+    } catch (e) { /* best-effort */ }
+  }
+
+  function clearOverlayTimer() {
+    if (railOverlayTimer) {
+      clearTimeout(railOverlayTimer);
+      railOverlayTimer = null;
+    }
+  }
+
+  function pauseOverlayTimer() {
+    if (!railOverlayTimer) return;
+    railOverlayRemaining = Math.max(0, railOverlayDeadline - Date.now());
+    clearOverlayTimer();
+  }
+
+  function resumeOverlayTimer() {
+    if (railOverlayTimer || !document.getElementById('rail-overlay')) return;
+    if (railOverlayRemaining <= 0) {
+      dismissRailOverlay('autodismiss');
+      return;
+    }
+    railOverlayDeadline = Date.now() + railOverlayRemaining;
+    railOverlayTimer = setTimeout(function () {
+      railOverlayTimer = null;
+      dismissRailOverlay('autodismiss');
+    }, railOverlayRemaining);
+  }
+
+  function detachOverlayListeners() {
+    if (railOverlayOnKey) {
+      document.removeEventListener('keydown', railOverlayOnKey, true);
+      railOverlayOnKey = null;
+    }
+    if (railOverlayOnClick) {
+      document.removeEventListener('click', railOverlayOnClick, true);
+      railOverlayOnClick = null;
+    }
+  }
+
+  function restoreOverlayFocus() {
+    var prev = railOverlayPrevFocus;
+    railOverlayPrevFocus = null;
+    if (!prev || typeof prev.focus !== 'function') return;
+    try { prev.focus(); } catch (e) { /* ignore */ }
+  }
+
+  function dismissRailOverlay(reason) {
+    var el = document.getElementById('rail-overlay');
+    if (!el || el.getAttribute('data-closing') === '1') return;
+    el.setAttribute('data-closing', '1');
+    clearOverlayTimer();
+    detachOverlayListeners();
+    if (reason === 'autodismiss') sendPixel('overlay_autodismiss');
+    el.classList.remove('is-in');
+    var ms = overlayFadeMs();
+    function done() {
+      if (el.parentNode) el.parentNode.removeChild(el);
+      var panel = document.getElementById('right-panel');
+      if (panel) panel.classList.remove('is-overlaying');
+      restoreOverlayFocus();
+    }
+    if (!ms) done();
+    else setTimeout(done, ms);
+  }
+
+  function showRailOverlay() {
+    if (document.getElementById('rail-overlay')) return;
+    var panel = document.getElementById('right-panel');
+    if (!panel) return;
+    var links = overlayLinks();
+    var headline = overlayHeadline();
+    var kicker = railCfg().title || 'Room Brief';
+    var el = document.createElement('div');
+    el.id = 'rail-overlay';
+    el.className = 'rail-overlay';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-labelledby', 'rail-overlay-headline');
+    el.setAttribute('tabindex', '-1');
+    var linkHtml = links.map(function (link) {
+      return '<a class="rail-overlay-cta" href="' + escapeHtml(link.url) +
+        '" target="_blank" rel="noopener noreferrer">' + escapeHtml(link.label) + '</a>';
+    }).join('');
+    el.innerHTML = '<div class="rail-overlay-card">' +
+      '<div class="rail-overlay-kicker">' + escapeHtml(kicker) + '</div>' +
+      '<p class="rail-overlay-headline" id="rail-overlay-headline">' + escapeHtml(headline) + '</p>' +
+      (linkHtml ? '<div class="rail-overlay-links">' + linkHtml + '</div>' : '') +
+      '</div>';
+    panel.appendChild(el);
+    panel.classList.add('is-overlaying');
+    markOverlaySeen();
+    sendPixel('overlay_shown');
+    railOverlayPrevFocus = document.activeElement;
+    railOverlayRemaining = overlayMs();
+    resumeOverlayTimer();
+    el.addEventListener('pointerenter', pauseOverlayTimer);
+    el.addEventListener('pointerleave', resumeOverlayTimer);
+    el.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a.rail-overlay-cta') : null;
+      if (!a) return;
+      sendPixel('overlay_click');
+      dismissRailOverlay('click');
+    });
+    railOverlayOnKey = function (e) {
+      if (e.key !== 'Escape') return;
+      if (!document.getElementById('rail-overlay')) return;
+      e.preventDefault();
+      dismissRailOverlay('escape');
+    };
+    railOverlayOnClick = function (e) {
+      var card = el.querySelector('.rail-overlay-card');
+      if (card && card.contains(e.target)) return;
+      dismissRailOverlay('outside');
+    };
+    document.addEventListener('keydown', railOverlayOnKey, true);
+    setTimeout(function () {
+      if (!document.getElementById('rail-overlay')) return;
+      document.addEventListener('click', railOverlayOnClick, true);
+    }, 0);
+    requestAnimationFrame(function () {
+      el.classList.add('is-in');
+      try { el.focus(); } catch (e) { /* ignore */ }
+      try { if (el.matches(':hover')) pauseOverlayTimer(); } catch (e2) { /* ignore */ }
+    });
+  }
+
+  function maybeShowRailOverlay() {
+    if (!railOverlayUiReady) return;
+    if (currentNest) return;
+    if (!overlayEnabled()) return;
+    if (overlaySeen()) return;
+    if (document.getElementById('rail-overlay')) return;
+    if (!railPanelIsVisible()) return;
+    showRailOverlay();
+  }
+
+  function syncRailOverlayViewport() {
+    if (!overlayEnabled()) return;
+    if (!railPanelIsVisible()) {
+      dismissRailOverlay('hidden');
+      return;
+    }
+    maybeShowRailOverlay();
+  }
+
+  function wireRailOverlay() {
+    if (railOverlayWired) return;
+    railOverlayWired = true;
+    window.addEventListener('resize', syncRailOverlayViewport);
   }
 
   function nwsCardFromPeriod(period, href, meta) {
@@ -1099,10 +1728,10 @@
   function fetchCwfCards() {
     var cfg = railCfg();
     var headers = nwsHeaders('application/ld+json');
-    var loc = cfg.productLocation || 'PPG';
+    var loc = cfg.productLocation || 'LOX';
     var type = cfg.productType || 'CWF';
     var meta = cfg.meta || 'Live';
-    var pageHref = cfg.forecastPage || 'https://www.weather.gov/ppg/marine';
+    var pageHref = cfg.forecastPage || 'https://www.weather.gov/lox/';
     var listUrl = 'https://api.weather.gov/products/types/' + encodeURIComponent(type) +
       '/locations/' + encodeURIComponent(loc);
     return fetch(listUrl, { headers: headers }).then(function (res) {
@@ -1594,6 +2223,7 @@
   }
 
   var f1RefreshTimer = null;
+
   var PORCH_DWELL_DEFAULT_MS = 9000;
   var porchDwellActive = false;
   var porchDwellPaused = false;
@@ -1666,11 +2296,28 @@
   }
 
   function seedRail() {
+    if (currentNest) {
+      paintRail(nestRailCards(currentNest));
+      return;
+    }
     var extra = outboundCards();
     paintRail(extra.length ? extra.slice(0, railNwsSlots()) : []);
   }
 
+  function abortPorchForNest() {
+    if (!porchDwellActive && !porchDwellPendingItems) return;
+    porchDwellActive = false;
+    porchDwellPaused = false;
+    porchDwellPendingItems = null;
+    if (porchDwellTimer) {
+      clearTimeout(porchDwellTimer);
+      porchDwellTimer = null;
+    }
+    setPorchDwellAttr(false);
+  }
+
   function commitRail(items) {
+    if (currentNest) return;
     if (porchDwellActive) {
       porchDwellPendingItems = items;
       return;
@@ -1710,6 +2357,11 @@
       porchDwellTimer = null;
     }
     setPorchDwellAttr(false);
+    if (currentNest) {
+      porchDwellPendingItems = null;
+      paintRail(nestRailCards(currentNest));
+      return;
+    }
     var items = porchDwellPendingItems;
     porchDwellPendingItems = null;
     if (items && items.length) paintRail(items);
@@ -1733,6 +2385,11 @@
   }
 
   function renderTrends(quiet) {
+    if (currentNest) {
+      applyNestRailChrome(currentNest);
+      paintRail(nestRailCards(currentNest));
+      return;
+    }
     var liveFetch = null;
     if (railUsesCwf()) liveFetch = fetchCwfCards;
     else if (railKind() === 'bart-bsa') liveFetch = fetchBartCards;
@@ -1756,8 +2413,11 @@
     }
     liveFetch().then(function (cards) {
       var extra = outboundCards();
-      var merged = (cards || []).concat(extra);
-      if (merged.length) commitRail(merged.slice(0, railNwsSlots()));
+      var slots = railNwsSlots();
+      var liveKeep = Math.max(0, slots - extra.length);
+      if (!liveKeep && (cards || []).length) liveKeep = 1;
+      var merged = (cards || []).slice(0, liveKeep).concat(extra);
+      if (merged.length) commitRail(merged);
       else commitRail(fallbackTrendCards());
     }).catch(function (err) {
       console.warn(railKind() || 'rail', err);
@@ -1883,6 +2543,7 @@
     var handle = (currentUser && currentUser.handle) || String(disp).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'member';
     return fbDb.collection('posts').add({
       siteId: SITE_ID,
+      nestSlug: postNestSlug(null),
       parentId: null,
       authorUid: live.uid,
       authorName: disp,
@@ -1925,6 +2586,9 @@
         const inner = '<div class="explore-card-tag">' + escapeHtml(c.tag) + '</div>' +
           '<div class="explore-card-title">' + escapeHtml(c.title) + '</div>' +
           '<div class="explore-card-snippet">' + escapeHtml(c.snippet) + '</div>';
+        if (c.slug) {
+          return '<a class="explore-card" href="' + escapeHtml(nestPath(c.slug)) + '" data-nest="' + escapeHtml(c.slug) + '">' + inner + '</a>';
+        }
         if (c.url) {
           return '<a class="explore-card" href="' + c.url + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>';
         }
@@ -1935,6 +2599,7 @@
     var topics = document.getElementById('explore-pane-topics');
     if (places) places.innerHTML = cards(PLACES);
     if (topics) topics.innerHTML = cards(TOPICS);
+    ensureExploreNestTab();
   }
 
   function renderNotifs() {
@@ -2420,6 +3085,7 @@
     closeSocialOverlays();
     document.getElementById('explore-overlay').classList.add('active');
     highlightSocial('explore');
+    ensureExploreNestTab();
   }
   function openProfile() {
     viewingProfile = null;
@@ -2927,6 +3593,7 @@
       const handle = (currentUser && currentUser.handle) || String(disp).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'member';
       const doc = {
         siteId: SITE_ID,
+        nestSlug: postNestSlug(parentId),
         parentId: parentId,
         authorUid: live.uid,
         authorName: disp,
@@ -3169,6 +3836,18 @@
         go(social.dataset.social);
         return;
       }
+      const nestLink = e.target.closest('[data-nest]');
+      if (nestLink) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+        e.preventDefault();
+        goNest(nestLink.getAttribute('data-nest'));
+        return;
+      }
+      if (e.target.closest('.brand-mark')) {
+        e.preventDefault();
+        go('home');
+        return;
+      }
       if (e.target.closest('#auth-signin') || e.target.closest('#profile-signin-prompt-btn')) {
         openAuth('join');
         return;
@@ -3240,7 +3919,7 @@
         if (t === 'following') go('following');
         else if (t === 'hot') go('hot');
         else if (t === 'new') go('new');
-        else go('home');
+        else goRoom();
         return;
       }
 
@@ -3295,6 +3974,8 @@
         });
         document.getElementById('explore-pane-places').classList.toggle('active', etab.dataset.exploreTab === 'places');
         document.getElementById('explore-pane-topics').classList.toggle('active', etab.dataset.exploreTab === 'topics');
+        var nestPane = document.getElementById('explore-pane-nests');
+        if (nestPane) nestPane.classList.toggle('active', etab.dataset.exploreTab === 'nests');
         return;
       }
 
@@ -3329,7 +4010,7 @@
     });
     document.getElementById('sidebar-search-btn').addEventListener('click', function () { go('explore'); });
     document.getElementById('sidebar-post-btn').addEventListener('click', function () {
-      go('home');
+      goRoom();
       setTimeout(function () {
         const input = document.getElementById('thoughts-compose-input');
         if (input) { input.focus(); input.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
@@ -3337,7 +4018,7 @@
     });
 
     ['profile-back', 'notif-back', 'explore-back'].forEach(function (id) {
-      document.getElementById(id).addEventListener('click', function () { go('home'); });
+      document.getElementById(id).addEventListener('click', function () { goRoom(); });
     });
     var markRead = document.getElementById('notif-mark-read');
     if (markRead) markRead.addEventListener('click', function () { /* soon: no live notifs */ });
@@ -3493,7 +4174,7 @@
         });
       }
       function cards(list) {
-        if (!list.length) return '<p class="empty-note">Nothing in the 415 matched that.</p>';
+        if (!list.length) return '<p class="empty-note">Nothing matched that.</p>';
         return list.map(function (c) {
           return '<article class="explore-card"><div class="explore-card-tag">' + escapeHtml(c.tag) +
             '</div><div class="explore-card-title">' + escapeHtml(c.title) +
@@ -3502,6 +4183,8 @@
       }
       document.getElementById('explore-pane-places').innerHTML = cards(filt(PLACES));
       document.getElementById('explore-pane-topics').innerHTML = cards(filt(TOPICS));
+      var nestPane = document.getElementById('explore-pane-nests');
+      if (nestPane) fillExploreNests(nestPane, filt(nestExploreCards()));
     });
   }
 
@@ -3512,6 +4195,7 @@
   var liveStories = [];
   var storiesUnsub = null;
   var storiesWired = false;
+  var storiesDebugOwnUid = '';
   var storyFile = null;
   var storyFileUrl = null;
   var storyType = 'text';
@@ -3712,7 +4396,7 @@
       var lastB = byUid[b][byUid[b].length - 1].ms || 0;
       return lastB - lastA;
     });
-    var me = liveUid();
+    var me = liveUid() || (storiesLocalHost() ? storiesDebugOwnUid : '');
     if (me && byUid[me]) {
       order = [me].concat(order.filter(function (u) { return u !== me; }));
     }
@@ -3861,7 +4545,7 @@
           '<button type="button" data-story-type="image">Photo</button>' +
           '<button type="button" data-story-type="video">Clip</button>' +
         '</div>' +
-        '<textarea id="stories-composer-text" maxlength="' + STORIES_TEXT_MAX + '" placeholder="' + escapeHtml((site && site.composePlaceholder) || "What\'s happening in this room?") + '"></textarea>' +
+        '<textarea id="stories-composer-text" maxlength="' + STORIES_TEXT_MAX + '" placeholder="What is SAMO doing right now?"></textarea>' +
         '<input class="stories-composer-file" id="stories-composer-image" type="file" accept="image/jpeg,image/png,image/gif,image/webp,.jpg,.jpeg,.png,.gif,.webp" hidden>' +
         '<input class="stories-composer-file" id="stories-composer-video" type="file" accept="video/mp4,video/webm,.mp4,.webm" hidden>' +
         '<div class="stories-composer-preview" id="stories-composer-preview"></div>' +
@@ -4213,8 +4897,8 @@
     }
     var el = ensureStoriesTray();
     var groups = storyGroups();
-    var signedIn = isLiveUser();
-    var me = liveUid() || '';
+    var signedIn = isLiveUser() || (storiesLocalHost() && !!storiesDebugOwnUid);
+    var me = liveUid() || storiesDebugOwnUid || '';
     var html = '';
     if (signedIn) {
       var mine = groups.filter(function (g) { return g.uid === me; })[0];
@@ -4311,19 +4995,20 @@
           el.hidden = false;
           el.innerHTML =
             '<button type="button" class="stories-item is-add" data-story-add="1" aria-label="Add story">' +
-              '<span class="stories-ring"><span class="stories-avatar" style="background:' + colorFor(SITE_ID || 'me') + '">' +
-              escapeHtml(initials((site && site.name) || 'Me')) + '</span>' +
+              '<span class="stories-ring"><span class="stories-avatar" style="background:' + colorFor('samo') + '">SM</span>' +
               '<span class="stories-add-badge">+</span></span>' +
               '<span class="stories-label">Add story</span></button>';
         },
-        setDemo: function (list) {
+        setDemo: function (list, ownUid) {
+          if (storiesUnsub) { storiesUnsub(); storiesUnsub = null; }
+          storiesDebugOwnUid = ownUid || '';
           liveStories = (list || []).map(function (s, i) {
             return {
               id: s.id || ('demo-' + i),
               siteId: SITE_ID,
               authorUid: s.authorUid || ('demo-' + i),
-              name: s.name || (site && site.name) || 'Room',
-              handle: s.handle || SITE_ID || 'room',
+              name: s.name || 'SAMO',
+              handle: s.handle || 'samo',
               type: s.type || 'text',
               text: s.text || '',
               mediaUrl: s.mediaUrl || '',
@@ -4347,6 +5032,7 @@
     TRENDS = site.trends || [];
     PLACES = site.places || [];
     TOPICS = site.topics || [];
+    NESTS = Array.isArray(site.nests) ? site.nests.filter(function (n) { return n && n.slug; }) : [];
     applyTheme(site.theme);
     applySiteChrome();
     ensureJoinAuthLayout();
@@ -4388,7 +5074,6 @@
     listenKillSwitch();
     wireEvents();
     document.addEventListener('subx-auth-land', function () { landInFeedCompose(); });
-    renderTrends();
     renderExplore();
     renderNotifs();
     renderThreads();
@@ -4396,9 +5081,15 @@
     listenLivePosts();
     renderFeed();
     initStories();
+    railOverlayUiReady = true;
+    wireRailOverlay();
+    maybeShowRailOverlay();
+    renderTrends();
 
     window.addEventListener('hashchange', applyRoute);
+    window.addEventListener('popstate', applyRoute);
     try { deepPostId = new URLSearchParams(location.search).get('p') || ''; } catch (e) { deepPostId = ''; }
+    restoreBouncedPath();
     if (!location.hash || location.hash === '#') {
       history.replaceState(null, '', location.pathname + location.search + '#home');
     }
@@ -4410,7 +5101,7 @@
       selectThoughtsTab('foryou');
     }
     syncHamburgerAria();
-    try { var k='subx.vid'; var v=localStorage.getItem(k); if (!v) { v=Math.random().toString(36).slice(2)+Date.now().toString(36); localStorage.setItem(k,v); } if (!sessionStorage.getItem('subx.hit.'+SITE_ID)) { sessionStorage.setItem('subx.hit.'+SITE_ID,'1'); navigator.sendBeacon('https://us-central1-subx-skins.cloudfunctions.net/pixel?s='+encodeURIComponent(SITE_ID)+'&v='+encodeURIComponent(v)); } } catch (e) {}
+    try { if (!sessionStorage.getItem('subx.hit.'+SITE_ID)) { sessionStorage.setItem('subx.hit.'+SITE_ID,'1'); sendPixel(); } } catch (e) {}
   }
 
   fetch(SITE_JSON_URL)
