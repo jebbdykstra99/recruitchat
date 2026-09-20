@@ -4,7 +4,7 @@
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
   "composePlaceholder": "What's the loop looking like?",
-  "emptyState": "This room is empty. Sign in with email to talk the loop. Guest can browse only. No résumé upload.",
+  "emptyState": "Preview. Seed gate still on: 2–3 real people + one real req before any public seed. Sample threads are dress rehearsal — not live volume. No invented open roles. Sign in with email to talk the loop. Guest can browse only. Talk here. Don’t PDF me.",
   "theme": {
     "bg": "#EBF2F6",
     "surface": "#F7FAFC",
@@ -75,66 +75,66 @@
   ],
   "places": [
     {
-      "tag": "Room",
-      "title": "The hiring floor",
-      "snippet": "Where the loop gets talked, not packaged."
+      "tag": "Seat",
+      "title": "One req, one thread",
+      "snippet": "Each live role gets one living thread — not another Easy Apply void."
     },
     {
-      "tag": "Room",
-      "title": "Phone screen",
-      "snippet": "Fifteen minutes, three canned questions, one real one."
+      "tag": "Seat",
+      "title": "Recruiter posts · seeker lurk",
+      "snippet": "Recruiters talk the req; seekers follow free. No résumé upload."
     },
     {
-      "tag": "Room",
-      "title": "Onsite / loop day",
-      "snippet": "Five interviews, one lunch, no verdict until Friday."
+      "tag": "Seat",
+      "title": "Seat affinity",
+      "snippet": "Function, company, or team — find your floor, not a megathread."
     },
     {
-      "tag": "Room",
-      "title": "Offer week",
-      "snippet": "Comp talk, start dates, and the silence after \"we are aligning.\""
+      "tag": "Rail",
+      "title": "Stage",
+      "snippet": "What’s live on this req (open / screens / offer window). Primary source only."
     },
     {
-      "tag": "Room",
-      "title": "Recruiter inbox",
-      "snippet": "InMail spam vs the one note that actually read the thread."
+      "tag": "Rail",
+      "title": "Pipeline",
+      "snippet": "Where the hire sits — without inventing counts or outcomes."
     },
     {
-      "tag": "Room",
-      "title": "Referral desk",
-      "snippet": "Warm intros, cold ghosts, and \"I forwarded it internally.\""
+      "tag": "Rail",
+      "title": "Next",
+      "snippet": "What happens after. Leave blank rather than guess."
     }
   ],
   "topics": [
     {
+      "tag": "Culture",
+      "title": "Talk here. Don’t PDF me.",
+      "snippet": "Hiring conversations where each open role gets a single living thread."
+    },
+    {
+      "tag": "Culture",
+      "title": "Not an ATS",
+      "snippet": "Not a job scrape. Not LinkedIn Easy Apply. Not a résumé mill."
+    },
+    {
+      "tag": "Gate",
+      "title": "Seed gate",
+      "snippet": "2–3 real people + one real req before any public seed. Sample = dress rehearsal."
+    },
+    {
       "tag": "Loop",
       "title": "Interview loops",
-      "snippet": "How many rounds is too many. Dummy talk only."
+      "snippet": "How many rounds is too many — when a real req is seeded."
     },
     {
-      "tag": "Spam",
-      "title": "Recruiter spam",
-      "snippet": "Roles you are not, locations you left, salary they will not say."
-    },
-    {
-      "tag": "Timing",
+      "tag": "Loop",
       "title": "Offer timing",
-      "snippet": "Verbal Friday, paper Tuesday, ghost by Thursday."
+      "snippet": "Verbal Friday, paper Tuesday — blank beats invented outcomes."
     },
     {
-      "tag": "Comp",
+      "tag": "Loop",
       "title": "Comp talk",
-      "snippet": "Bands, equity folklore, and \"competitive.\" Dummy numbers only."
-    },
-    {
-      "tag": "Remote",
-      "title": "Remote vs floor",
-      "snippet": "Hybrid that means three days, posted as \"flexible.\""
-    },
-    {
-      "tag": "Referrals",
-      "title": "Referrals",
-      "snippet": "The warm path. Still not a listing ingest."
+      "snippet": "Bands and ranges from primary source only. No folklore counts."
     }
   ],
   "stories": {
@@ -291,15 +291,27 @@
     "kind": "porch",
     "title": "Room Brief",
     "kicker": "The room, not the funnel",
-    "meta": "This room",
-    "footer": "One line, no resume. Ads off. Not a job scrape.",
+    "meta": "Preview · seed gate on",
+    "footer": "Talk here. Don’t PDF me. Not an ATS. Ads off. Seed gate: real people + one real req before public seed.",
+    "maxCards": 4,
     "outbound": [
       {
-        "tag": "Work",
-        "headline": "USAJOBS",
-        "snippet": "Public listings. The room is not the funnel.",
-        "url": "https://www.usajobs.gov/",
-        "meta": "Official · link-out"
+        "tag": "Stage",
+        "headline": "Preview · no public invite yet",
+        "snippet": "What’s live: seed gate still on. No invented open roles.",
+        "meta": "Early room"
+      },
+      {
+        "tag": "Pipeline",
+        "headline": "Jebb-network seed only",
+        "snippet": "Context only — never invented counts or outcomes.",
+        "meta": "Early room"
+      },
+      {
+        "tag": "Next",
+        "headline": "One req, one thread when seeded",
+        "snippet": "What happens after. Leave blank rather than guess.",
+        "meta": "Early room"
       }
     ],
     "porch": {
