@@ -296,22 +296,18 @@
     "maxCards": 4,
     "outbound": [
       {
-        "tag": "Stage",
-        "headline": "Preview · no public invite yet",
-        "snippet": "What’s live: seed gate still on. No invented open roles.",
-        "meta": "Early room"
+        "tag": "Board",
+        "headline": "USAJOBS",
+        "url": "https://www.usajobs.gov/",
+        "snippet": "Official OPM federal jobs board. Not our listings; no invented counts. Outbound only.",
+        "meta": "Official · board"
       },
       {
-        "tag": "Pipeline",
-        "headline": "Jebb-network seed only",
-        "snippet": "Context only — never invented counts or outcomes.",
-        "meta": "Early room"
-      },
-      {
-        "tag": "Next",
-        "headline": "One req, one thread when seeded",
-        "snippet": "What happens after. Leave blank rather than guess.",
-        "meta": "Early room"
+        "tag": "Watch",
+        "headline": "U.S. Department of Labor",
+        "url": "https://www.youtube.com/@USDOL",
+        "snippet": "Official USDOL YouTube. Outbound Watch only — no re-stream.",
+        "meta": "Official · link-out"
       }
     ],
     "porch": {
