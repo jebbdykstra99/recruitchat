@@ -318,5 +318,93 @@
       ],
       "dwellMs": 9000
     }
-  }
+  },
+  "taxonomy": {
+    "version": 1,
+    "name": "The room",
+    "symbolPrefix": "$",
+    "topics": [
+      {
+        "id": "roles",
+        "label": "Open roles",
+        "kind": "theme",
+        "blurb": "Real reqs",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "candidates",
+        "label": "Candidates",
+        "kind": "theme",
+        "blurb": "People side",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "interviewing",
+        "label": "Interviewing",
+        "kind": "theme",
+        "blurb": "Process talk",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "comp",
+        "label": "Comp",
+        "kind": "theme",
+        "blurb": "Bands & offers",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "referrals",
+        "label": "Referrals",
+        "kind": "theme",
+        "blurb": "Warm intros",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "founders",
+        "label": "Founders hiring",
+        "kind": "theme",
+        "blurb": "Early teams",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "ops",
+        "label": "Talent ops",
+        "kind": "theme",
+        "blurb": "Process ops",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "ethics",
+        "label": "Ethics",
+        "kind": "theme",
+        "blurb": "Fair hiring",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      }
+    ],
+    "defaultWatchlist": [
+      "roles",
+      "candidates",
+      "interviewing",
+      "ethics"
+    ],
+    "notes": "Factory followable topics (StockTwits-style). Users keep/unfollow/add on their watchlist."
+  },
+  "v": 1,
+  "cacheBust": 1
 }
