@@ -405,6 +405,80 @@
     ],
     "notes": "Factory followable topics (StockTwits-style). Users keep/unfollow/add on their watchlist."
   },
+  "nests": [
+    {
+      "slug": "one-req-one-thread",
+      "label": "One req, one thread",
+      "blurb": "Live role = one living thread; recruiters/HM post, seekers lurk free.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "hiring-floor",
+      "label": "Hiring floor",
+      "blurb": "SF Bay scene talk — place as scene, not Map Pack.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "screens",
+      "label": "Phone screen",
+      "blurb": "First-call honesty: canned vs real questions.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "loops",
+      "label": "Interview loops",
+      "blurb": "Round count, take-homes, walk-away talk — not packaged.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "offers",
+      "label": "Offer week",
+      "blurb": "Verbal → paper → silence; no invented comps.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "recruiter-inbox",
+      "label": "Recruiter inbox",
+      "blurb": "InMail spam vs the one note that read the thread.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "comp",
+      "label": "Comp talk",
+      "blurb": "Bands, equity folklore — talk only, not listings.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "people-recruiting",
+      "label": "People / Recruiting",
+      "blurb": "TA and People Ops in the room, not the ATS.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    },
+    {
+      "slug": "federal-usajobs",
+      "label": "Federal / USAJOBS",
+      "blurb": "Outbound to USAJOBS only — not a scrape.",
+      "parent": null,
+      "kind": "theme",
+      "nav": true
+    }
+  ],
   "v": 1,
   "cacheBust": 1
 }
