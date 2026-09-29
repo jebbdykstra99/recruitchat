@@ -1,5 +1,6 @@
 {
   "siteId": "recruitchat",
+  "dms": true,
   "redditSr": "recruitchat",
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
