@@ -4,7 +4,7 @@
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
   "composePlaceholder": "What's the loop looking like?",
-  "emptyState": "Preview. Seed gate still on: 2–3 real people + one real req before any public seed. Sample threads are dress rehearsal — not live volume. No invented open roles. Sign in with email to talk the loop. Guest can browse only. Talk here. Don’t PDF me.",
+  "emptyState": "Preview. Seed gate still on: 2 to 3 real people + one real req before any public seed. Sample threads are dress rehearsal, not live volume. No invented open roles. Sign in with email to talk the loop. Guest can browse only. Talk here. Don’t PDF me.",
   "theme": {
     "bg": "#EBF2F6",
     "surface": "#F7FAFC",
@@ -61,7 +61,7 @@
     {
       "tag": "Board",
       "headline": "Indeed",
-      "snippet": "A public job board. Outbound only — not an ATS, not a résumé mill.",
+      "snippet": "A public job board. Outbound only, not an ATS, not a résumé mill.",
       "meta": "indeed.com · outbound",
       "href": "https://www.indeed.com/"
     },
@@ -77,7 +77,7 @@
     {
       "tag": "Seat",
       "title": "One req, one thread",
-      "snippet": "Each live role gets one living thread — not another Easy Apply void."
+      "snippet": "Each live role gets one living thread, not another Easy Apply void."
     },
     {
       "tag": "Seat",
@@ -87,7 +87,7 @@
     {
       "tag": "Seat",
       "title": "Seat affinity",
-      "snippet": "Function, company, or team — find your floor, not a megathread."
+      "snippet": "Function, company, or team: find your floor, not a megathread."
     },
     {
       "tag": "Rail",
@@ -97,7 +97,7 @@
     {
       "tag": "Rail",
       "title": "Pipeline",
-      "snippet": "Where the hire sits — without inventing counts or outcomes."
+      "snippet": "Where the hire sits, without inventing counts or outcomes."
     },
     {
       "tag": "Rail",
@@ -119,17 +119,17 @@
     {
       "tag": "Gate",
       "title": "Seed gate",
-      "snippet": "2–3 real people + one real req before any public seed. Sample = dress rehearsal."
+      "snippet": "2 to 3 real people + one real req before any public seed. Sample = dress rehearsal."
     },
     {
       "tag": "Loop",
       "title": "Interview loops",
-      "snippet": "How many rounds is too many — when a real req is seeded."
+      "snippet": "How many rounds is too many, when a real req is seeded."
     },
     {
       "tag": "Loop",
       "title": "Offer timing",
-      "snippet": "Verbal Friday, paper Tuesday — blank beats invented outcomes."
+      "snippet": "Verbal Friday, paper Tuesday: blank beats invented outcomes."
     },
     {
       "tag": "Loop",
@@ -142,7 +142,7 @@
     "maxSeconds": 15,
     "maxBytes": 8000000
   },
-  "seedNote": "sample — not mixed into the live feed",
+  "seedNote": "sample, not mixed into the live feed",
   "rail": {
     "kind": "porch",
     "title": "Room Brief",
@@ -162,7 +162,7 @@
         "tag": "Watch",
         "headline": "U.S. Department of Labor",
         "url": "https://www.youtube.com/@USDOL",
-        "snippet": "Official USDOL YouTube. Outbound Watch only — no re-stream.",
+        "snippet": "Official USDOL YouTube. Outbound Watch only, no re-stream.",
         "meta": "Official · link-out"
       }
     ],
@@ -273,7 +273,7 @@
     {
       "slug": "hiring-floor",
       "label": "Hiring floor",
-      "blurb": "SF Bay scene talk — place as scene, not Map Pack.",
+      "blurb": "SF Bay scene talk: place as scene, not Map Pack.",
       "parent": null,
       "kind": "theme",
       "nav": true
@@ -289,7 +289,7 @@
     {
       "slug": "loops",
       "label": "Interview loops",
-      "blurb": "Round count, take-homes, walk-away talk — not packaged.",
+      "blurb": "Round count, take-homes, walk-away talk: not packaged.",
       "parent": null,
       "kind": "theme",
       "nav": true
@@ -313,7 +313,7 @@
     {
       "slug": "comp",
       "label": "Comp talk",
-      "blurb": "Bands, equity folklore — talk only, not listings.",
+      "blurb": "Bands, equity folklore: talk only, not listings.",
       "parent": null,
       "kind": "theme",
       "nav": true
@@ -329,7 +329,7 @@
     {
       "slug": "federal-usajobs",
       "label": "Federal / USAJOBS",
-      "blurb": "Outbound to USAJOBS only — not a scrape.",
+      "blurb": "Outbound to USAJOBS only, not a scrape.",
       "parent": null,
       "kind": "theme",
       "nav": true
