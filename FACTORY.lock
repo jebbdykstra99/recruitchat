@@ -5,7 +5,7 @@
   "siteId": "recruitchat",
   "files": {
     "factory.js": "e3a8df039c327664679121a12213a0d5018a3fc64fac4722e275e2ea72c1e4ae",
-    "styles.css": "87bfb8bf918f3f62e852883a84ee52b063ccdbf802fea7dacb67343b87d9257f"
+    "styles.css": "94dd6880faadf16df001c9cd6ae5965e31946c2f0152d20025298a04fe14bb2f"
   },
   "keepFiles": [
     "takedown.js"
