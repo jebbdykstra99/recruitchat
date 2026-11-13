@@ -8,7 +8,7 @@ No Firebase. No Auth provider. No AI / Ollama. No résumé upload. No LinkedIn i
 
 ## Pages
 
-Drop these files on `main` at `/` (root). Custom domain `recruitchat.com` (`CNAME` already contains exactly that). Leave HTTPS off until the GitHub cert is issued. Preview banner and `robots.txt` noindex stay on.
+Drop these files on `main` at `/` (root). Custom domain `recruitchat.com` (`CNAME` already contains exactly that). Leave HTTPS off until the GitHub cert is issued. Live: Beta banner, search indexing allowed (`robots.txt` + `sitemap.xml`).
 
 ## What this is
 
