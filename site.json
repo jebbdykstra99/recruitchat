@@ -4,7 +4,7 @@
   "name": "recruitchat",
   "tagline": "The room, not the funnel.",
   "composePlaceholder": "What's the loop looking like?",
-  "emptyState": "Preview. Seed gate still on: 2 to 3 real people + one real req before any public seed. Sample threads are dress rehearsal, not live volume. No invented open roles. Sign in with email to talk the loop. Guest can browse only. Talk here. Don’t PDF me.",
+  "emptyState": "Public beta. Seed gate still on: 2 to 3 real people + one real req before any public seed. Sample threads are dress rehearsal, not live volume. No invented open roles. Sign in with email to talk the loop. Guest can browse only. Talk here. Don’t PDF me.",
   "theme": {
     "bg": "#EBF2F6",
     "surface": "#F7FAFC",
@@ -147,7 +147,7 @@
     "kind": "porch",
     "title": "Room Brief",
     "kicker": "The room, not the funnel",
-    "meta": "Preview · seed gate on",
+    "meta": "Beta · seed gate on",
     "footer": "Talk here. Don’t PDF me. Not an ATS. Ads off. Seed gate: real people + one real req before public seed.",
     "maxCards": 4,
     "outbound": [
