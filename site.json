@@ -143,6 +143,24 @@
     "maxBytes": 8000000
   },
   "seedNote": "sample, not mixed into the live feed",
+  "featured": {
+    "featuredDays": 3,
+    "maxPinned": 3,
+    "articleMinChars": 600,
+    "label": "Our articles",
+    "handles": [
+      "roomnotfunnel",
+      "stagerail",
+      "onereqdesk",
+      "factbar",
+      "loopnotes",
+      "seekerlurk",
+      "dolwatch",
+      "usajobsrail",
+      "seedgate",
+      "bayfloor"
+    ]
+  },
   "rail": {
     "kind": "porch",
     "title": "Room Brief",
